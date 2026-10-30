@@ -1,0 +1,252 @@
+:root {
+  --azul:#14546c;
+  --verde:#168b80;
+  --fondo:#edf6f6;
+  --texto:#243e49;
+  --borde:#d5e7e8}
+* {
+  box-sizing:border-box}
+
+.boton-fichas {
+    display: flex;
+    background: white;
+    color: #14556b;
+    border: 1px solid #d3e1e5;
+    border-radius: 10px;
+    text-decoration: none;
+    font: inherit;
+    cursor: pointer;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+    padding:16px 12px
+}
+
+.boton-fichas:hover {
+    background: #e0f2f1;
+}
+
+body {
+  margin:0;
+  background:linear-gradient(135deg,#ecf8f3,#e6f3ff);
+  color:var(--texto);
+  font:16px/1.6 'Segoe UI',Arial,sans-serif}
+.hero {
+  background:linear-gradient(115deg,#14546c,#218a9b);
+  color:white;
+  text-align:center;
+  padding:35px 15px 30px}
+.hero h1 {
+  font-size:clamp(1.7rem,4vw,2.6rem);
+  margin:8px 0}
+.hero p {
+  margin:7px auto;
+  max-width:620px}
+.kicker {
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.13em}
+.icono {
+  display:grid;
+  place-items:center;
+  width:57px;
+  height:57px;
+  margin:auto;
+  background:#ffffff24;
+  border-radius:16px;
+  font-size:2rem}
+.tabs {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+  padding:16px 12px}
+.tabs button {
+  border:1px solid var(--borde);
+  border-radius:10px;
+  padding:11px 16px;
+  background:white;
+  color:var(--azul);
+  font-weight:700;
+  cursor:pointer}
+.tabs button.activo {
+  background:var(--azul);
+  color:white}
+main {
+  max-width:800px;
+  padding:8px 15px 50px;
+  margin:auto}
+.seccion {
+  display:none}
+.seccion.activo {
+  display:block}
+.card {
+  background:white;
+  padding:clamp(18px,4vw,35px);
+  border-radius:18px;
+  box-shadow:0 8px 27px #14546c16}
+.card h2 {
+  color:var(--azul);
+  margin:0 0 15px;
+  border-bottom:2px solid #c6eeee;
+  padding-bottom:10px}
+label {
+  display:block;
+  font-weight:650;
+  margin:18px 0 8px}
+input,select {
+  display:block;
+  width:100%;
+  padding:12px 13px;
+  margin-top:7px;
+  font:inherit;
+  border:1px solid #a9c8cb;
+  border-radius:9px;
+  background:#fbfefe;
+  color:var(--texto)}
+input:focus,select:focus,button:focus-visible,a:focus-visible {
+  outline:3px solid #e0ab4d;
+  outline-offset:2px}
+.campos {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px}
+.disponibilidad {
+  padding:15px;
+  margin:15px 0;
+  border:1px solid #b5e1de;
+  border-radius:10px;
+  background:#ebf9f5;
+  font-weight:700;
+  color:#14625b}
+.mensaje {
+  padding:13px 15px;
+  margin:15px 0;
+  border-radius:10px}
+.info {
+  background:#e9f4fc;
+  border-left:4px solid #3e89b1}
+.error {
+  background:#fff0ef;
+  color:#8c2724;
+  border-left:4px solid #dc514d}
+.exito {
+  background:#e6f8ec;
+  color:#185e38;
+  border-left:4px solid #36a663}
+.oculto {
+  display:none!important}
+.primario,.accion {
+  background:var(--verde);
+  color:white;
+  border:0;
+  border-radius:9px;
+  padding:13px 20px;
+  font:inherit;
+  font-weight:700;
+  display:inline-block;
+  cursor:pointer;
+  text-decoration:none;
+  margin:8px 7px 8px 0}
+.secundario,.fila>button {
+  background:#e6edf0;
+  color:var(--azul);
+  border:0;
+  border-radius:9px;
+  padding:12px 17px;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+  margin:8px 6px 8px 0}
+button:disabled {
+  opacity:.45;
+  cursor:not-allowed}
+.nota {
+  font-size:.9rem}
+.fila {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:end;
+  gap:9px}
+.fila label {
+  flex:1;
+  min-width:180px}
+.lista {
+  margin-top:20px}
+.item {
+  padding:18px 0;
+  border-bottom:1px solid var(--borde)}
+.item h3 {
+  color:var(--azul);
+  margin:0 0 8px}
+.item p {
+  margin:3px 0}
+footer {
+  text-align:center;
+  color:#58737a;
+  padding:22px 12px;
+  font-size:.85rem}
+ol li {
+  padding:5px 0}
+@media(max-width:560px) {
+  .campos {
+  grid-template-columns:1fr;
+  gap:0}
+.tabs button {
+  font-size:.85rem;
+  padding:9px 11px}
+.primario,.accion {
+  max-width:100%}
+}
+ 
+
+/* Sección del personal odontológico: fotografía a la izquierda, ficha a la derecha. */
+.doctores {
+  margin-top:38px;
+  border-top:1px solid var(--borde);
+  padding-top:20px}
+
+.doctores h2 {
+  margin-top:0}
+
+.doctor {
+  display:grid;
+  grid-template-columns:minmax(145px,32%) 1fr;
+  gap:24px;
+  align-items:center;
+  padding:25px 0;
+  border-bottom:1px solid var(--borde)}
+
+.doctor-foto {
+  width:100%}
+.foto-doctor  {
+   width:100%;
+   height:220px;
+   object-fit:cover;
+   border-radius:12px;
+   border:1px solid #a9c8cb;
+   background:#f2f8fa;
+   }
+
+.doctor-datos h3 {
+  margin:0 0 12px;
+  color:var(--azul)}
+.doctor-datos p {
+  margin:8px 0}
+
+#informacion #exito {
+  margin-bottom:24px}
+#informacion #exito h3 {
+  margin:0 0 8px}
+
+@media(max-width:580px) {
+  .doctor {
+  grid-template-columns:1fr;
+  gap:12px}
+.doctor-foto {
+  max-width:240px}
+.foto-doctor {
+  height:180px}
+}
+

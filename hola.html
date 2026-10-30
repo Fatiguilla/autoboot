@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   Fichas odontológicas | Hospital Virgen del Rosario
+  </title>
+  <link href="styles.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+  </script>
+ </head>
+ <body>
+  <header class="hero">
+   <div class="icono">
+    ✚
+   </div>
+   <p class="kicker">
+    HOSPITAL VIRGEN DEL ROSARIO · EL VILLAR
+   </p>
+   <h1>
+    Fichas odontológicas
+   </h1>
+   <p>
+    Reserva en línea para pacientes del municipio y comunidades aledañas.
+   </p>
+  </header>
+  
+<nav class="tabs">
+
+    <button class="activo" data-target="informacion" type="button">
+        Información
+    </button>
+
+    <button data-target="reservar" type="button">
+        Solicitar ficha
+    </button>
+
+    <a href="mis_fichas.html" class="boton-fichas">
+        Mis Fichas
+    </a>
+
+    <button data-target="ayuda" type="button">
+        Ayuda
+    </button>
+
+    <button data-target="hospital" type="button">
+        Acceso hospital
+    </button>
+
+</nav>
+
+  <main>
+   <section class="seccion" id="reservar">
+    <article class="card">
+     <h2>
+      Solicitar atención odontológica
+     </h2>
+     <p>
+      Se habilitan
+      <strong>
+       4 fichas por fecha
+      </strong>
+      : 2 exclusivas para comunidades aledañas y 2 generales. Las solicitudes quedan pendientes hasta la confirmación del hospital.
+     </p>
+     <div class="mensaje error oculto" id="configAviso" role="alert">
+      Falta conectar Supabase. Coloca la URL y la clave pública en config.js.
+     </div>
+     <form id="formReserva">
+      <div class="campos">
+       <label>
+        Fecha de atención
+        <input id="fecha" required="" type="date"/>
+       </label>
+       <label>
+        Tipo de cupo
+        <select id="categoria" required="">
+         <option value="">
+          Seleccione
+         </option>
+         <option value="comunidad">
+          Comunidad aledaña (exclusivo)
+         </option>
+         <option value="general">
+          General
+         </option>
+        </select>
+       </label>
+      </div>
+      <div aria-live="polite" class="disponibilidad" id="cupos">
+       Seleccione una fecha para consultar disponibilidad.
+      </div>
+      <label>
+       Nombre completo
+       <input autocomplete="name" id="nombre" maxlength="100" minlength="5" required="" type="text"/>
+      </label>
+      <div class="campos">
+       <label>
+        Celular boliviano (8 dígitos)
+        <input id="telefono" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="7XXXXXXX" required="" type="tel"/>
+       </label>
+       <label class="oculto" id="grupoComunidad">
+        Comunidad de residencia
+        <input id="comunidad" maxlength="100" placeholder="Nombre de la comunidad"/>
+       </label>
+      </div>
+      <div class="mensaje info">
+       Para proteger tu privacidad, solo solicitamos datos necesarios para gestionar la ficha. No incluyas información clínica sensible. La categoría de comunidad será verificada por el personal del hospital.
+      </div>
+      <button class="primario" id="enviar" type="submit">
+       Registrar solicitud
+      </button>
+      <p aria-live="polite" class="mensaje oculto" id="resultado" role="status">
+      </p>
+     </form>
+    </article>
+   </section>
+   <section class="seccion activo" id="informacion">
+    <article class="card">
+     <h2>
+      Información de fichas
+     </h2>
+     <div class="mensaje exito oculto" id="exito">
+      <h3>
+       Solicitud registrada
+      </h3>
+      <p id="detalleExito">
+      </p>
+      <p>
+       Guarda el número de solicitud y espera la confirmación del hospital.
+      </p>
+      <a class="accion" href="#" id="enlaceWa" rel="noopener noreferrer" target="_blank">
+       Abrir WhatsApp del hospital
+      </a>
+      <p class="nota">
+       El registro en el sistema ya se realizó. WhatsApp es opcional. La ficha NO está confirmada hasta recibir respuesta del hospital.
+      </p>
+      <p>
+       Puedes cerrar esta página: no necesitas enviar WhatsApp para que la solicitud quede registrada.
+      </p>
+     </div>
+     <p>
+      El Hospital Virgen del Rosario de El Villar dispone de cuatro cupos de solicitud en línea por fecha: dos destinados exclusivamente a las comunidades aledañas y dos generales.
+     </p>
+     <p>
+      Una solicitud queda inicialmente pendiente. El hospital verificará los datos, la procedencia de los pacientes de comunidades y la disponibilidad antes de confirmar la atención.
+     </p>
+     <p>
+      Una solicitud rechazada libera el cupo correspondiente.
+     </p>
+     <section aria-labelledby="titulo-doctores" class="doctores">
+      <h2 id="titulo-doctores">
+       Nuestros doctores
+      </h2>
+      <p class="nota">
+       Conoce al personal médico del servicio de odontología. Las fotografías y datos serán agregados con autorización del hospital.
+      </p>
+      <article class="doctor">
+       <div class="doctor-foto">
+        <!-- Cambia doctor1.svg por la foto real, por ejemplo doctor1.jpg -->
+        <img alt="Fotografía del doctor 1" class="foto-doctor" src="doctor1.svg"/>
+       </div>
+       <div class="doctor-datos">
+        <h3>
+         Doctor/a 1 — nombre pendiente
+        </h3>
+        <p>
+         <strong>
+          Especialidad:
+         </strong>
+         Por completar
+        </p>
+        <p>
+         <strong>
+          Información profesional:
+         </strong>
+         Espacio para describir formación, experiencia y servicios del profesional.
+        </p>
+        <p>
+         <strong>
+          Horarios de atención:
+         </strong>
+         Por confirmar
+        </p>
+       </div>
+      </article>
+      <article class="doctor">
+       <div class="doctor-foto">
+        <!-- Cambia doctor2.svg por la foto real, por ejemplo doctor2.jpg -->
+        <img alt="Fotografía del doctor 2" class="foto-doctor" src="rosendo"/>
+       </div>
+       <div class="doctor-datos">
+        <h3>
+         Doctor/a 2 — nombre pendiente
+        </h3>
+        <p>
+         <strong>
+          Especialidad:
+         </strong>
+         Por completar
+        </p>
+        <p>
+         <strong>
+          Información profesional:
+         </strong>
+         Espacio para describir formación, experiencia y servicios del profesional.
+        </p>
+        <p>
+         <strong>
+          Horarios de atención:
+         </strong>
+         Por confirmar
+        </p>
+       </div>
+      </article>
+     </section>
+    </article>
+   </section>
+   <section class="seccion" id="ayuda">
+    <article class="card">
+     <h2>
+      ¿Cómo solicitar?
+     </h2>
+     <ol>
+      <li>
+       Elige una fecha y el tipo de cupo.
+      </li>
+      <li>
+       Revisa cuántas fichas quedan.
+      </li>
+      <li>
+       Completa tus datos y registra la solicitud.
+      </li>
+      <li>
+       Conserva el número de solicitud que aparecerá en pantalla.
+      </li>
+      <li>
+       Espera la confirmación del hospital; si deseas, comunícate por WhatsApp.
+      </li>
+     </ol>
+     <p>
+      Si los cupos están agotados, selecciona otra fecha. Si necesitas atención urgente, acude al establecimiento o utiliza los canales oficiales de atención.
+     </p>
+    </article>
+   </section>
+   <section class="seccion" id="hospital">
+    <article class="card">
+     <h2>
+      Panel del hospital
+     </h2>
+     <p>
+      Acceso exclusivo para personal registrado y autorizado.
+     </p>
+     <div id="loginZona">
+      <form id="formLogin">
+       <label>
+        Correo institucional
+        <input autocomplete="username" id="correo" required="" type="email"/>
+       </label>
+       <label>
+        Contraseña
+        <input autocomplete="current-password" id="clave" required="" type="password"/>
+       </label>
+       <button class="primario" type="submit">
+        Iniciar sesión
+       </button>
+      </form>
+     </div>
+     <div class="oculto" id="panelZona">
+      <div class="fila">
+       <label>
+        Fecha a revisar
+        <input id="fechaHospital" type="date"/>
+       </label>
+       <button id="actualizar" type="button">
+        Actualizar solicitudes
+       </button>
+       <button class="secundario" id="salir" type="button">
+        Cerrar sesión
+       </button>
+      </div>
+      <div class="lista" id="listaHospital">
+      </div>
+     </div>
+     <p class="mensaje oculto" id="hospitalMensaje" role="status">
+     </p>
+    </article>
+   </section>
+  </main>
+  <footer>
+   Hospital Virgen del Rosario · El Villar · Bolivia. Esta página no sustituye la atención de emergencias.
+  </footer>
+  <script src="config.js">
+  </script>
+  <script src="app.js">
+  </script>
+ </body>
+</html>

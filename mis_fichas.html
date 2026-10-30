@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultar mis fichas | Hospital Virgen del Rosario</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #edf7f7; font-family: Arial, sans-serif; color: #173f51; }
+    header { background: #165a73; color: white; padding: 25px 15px; text-align: center; }
+    header h1 { margin: 4px 0 10px; }
+    main { max-width: 680px; margin: 25px auto; padding: 0 16px; }
+    .tarjeta { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 6px 22px #00324415; }
+    label { display: block; font-weight: bold; margin: 16px 0 7px; }
+    input { width: 100%; padding: 13px; border: 1px solid #accbd0; border-radius: 8px; font-size: 16px; }
+    button { background: #148e81; color: white; border: none; padding: 13px 22px; border-radius: 9px; cursor: pointer; font-weight: bold; margin-top: 19px; }
+    button:disabled { opacity: .55; cursor: wait; }
+    .aviso { background: #e9f5fa; border-left: 4px solid #287da4; padding: 12px; border-radius: 8px; font-size: 14px; }
+    .resultado { margin-top: 20px; padding: 16px; background: #e8f8f1; border-radius: 8px; }
+    .error { background: #ffeded; color: #9b2424; }
+    .oculto { display: none; }
+    a { color: #0b5774; }
+    .nota { font-size: 14px; color: #53747b; }
+  </style>
+</head>
+<body>
+<header>
+  <p>HOSPITAL VIRGEN DEL ROSARIO · EL VILLAR</p>
+  <h1>Consultar mis fichas</h1>
+  <p>Consulta el estado de tu solicitud odontológica</p>
+</header>
+<main>
+  <div class="tarjeta">
+    <p class="aviso">Este espacio es solo para pacientes. El personal del hospital administra las solicitudes en el acceso privado de la página principal.</p>
+    <p>Escribe el <strong>número de solicitud</strong> que recibiste al reservar y el <strong>celular</strong> que utilizaste.</p>
+    <form id="consulta">
+      <label for="numero">Número de solicitud</label>
+      <input id="numero" type="number" min="1" step="1" placeholder="Ejemplo: 15" required>
+      <label for="telefono">Celular (8 dígitos)</label>
+      <input id="telefono" type="tel" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" placeholder="Ejemplo: 7XXXXXXX" required>
+      <button id="buscar" type="submit">Consultar mi ficha</button>
+    </form>
+    <div id="resultado" class="resultado oculto" role="status" aria-live="polite"></div>
+    <p class="nota">Podrás consultar las fichas futuras, las de hoy y las de los dos días anteriores. Después se eliminarán según la configuración de limpieza de Supabase.</p>
+    <p><a href="hola.html">Volver a la página principal</a></p>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+  // 1. Usar los datos de conexión que ya están en config.js.
+  const base = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+  // 2. Buscar solo una ficha, usando su número y el celular registrado.
+  document.getElementById('consulta').addEventListener('submit', async function (evento) {
+    evento.preventDefault();
+    const boton = document.getElementById('buscar');
+    const salida = document.getElementById('resultado');
+    const numero = Number(document.getElementById('numero').value);
+    const telefono = document.getElementById('telefono').value.trim();
+    if (!Number.isSafeInteger(numero) || numero <= 0 || !/^[0-9]{8}$/.test(telefono)) return;
+
+    boton.disabled = true;
+    salida.className = 'resultado';
+    salida.textContent = 'Consultando...';
+
+    try {
+      const respuesta = await base.rpc('consultar_mi_ficha', {
+        p_id: numero,
+        p_telefono: telefono
+      });
+      if (respuesta.error) throw respuesta.error;
+      salida.replaceChildren();
+      const ficha = respuesta.data;
+      if (!ficha) {
+        salida.textContent = 'No encontramos una ficha vigente con esos datos. Comprueba el número y el celular.';
+      } else {
+        const titulo = document.createElement('h3');
+        titulo.textContent = 'Solicitud N.º ' + ficha.id;
+        salida.appendChild(titulo);
+        [
+          'Fecha: ' + ficha.fecha,
+          'Tipo de cupo: ' + (ficha.categoria === 'comunidad' ? 'Comunidades aledañas' : 'General'),
+          'Estado: ' + ficha.estado.toUpperCase()
+        ].forEach(function (texto) {
+          const linea = document.createElement('p');
+          linea.textContent = texto;
+          salida.appendChild(linea);
+        });
+        const nota = document.createElement('p');
+        nota.textContent = ficha.estado === 'pendiente'
+          ? 'Tu solicitud todavía no está confirmada. Espera la respuesta del hospital.'
+          : ficha.estado === 'confirmada'
+            ? 'El hospital confirmó la ficha. Consulta con el personal la hora exacta de atención.'
+            : 'Esta solicitud fue rechazada. Puedes consultar nuevas fechas disponibles.';
+        salida.appendChild(nota);
+      }
+    } catch (error) {
+      salida.className = 'resultado error';
+      salida.textContent = 'No fue posible consultar: ' + error.message;
+    } finally {
+      boton.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
